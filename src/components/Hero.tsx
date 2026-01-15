@@ -15,8 +15,17 @@ interface NewsItem {
     linkText: string;
 }
 
+interface EventItem {
+    _id: string;
+    title: string;
+    date: string;
+    locationName: string;
+    locationUrl: string;
+}
+
 export default function Hero() {
     const [news, setNews] = useState<NewsItem[]>([]);
+    const [events, setEvents] = useState<EventItem[]>([]);
 
     useEffect(() => {
         const fetchNews = async () => {
@@ -30,7 +39,20 @@ export default function Hero() {
             }`);
             setNews(data);
         };
+
+        const fetchEvents = async () => {
+            const data = await client.fetch(`*[_type == "event"] | order(date asc) {
+                _id,
+                title,
+                date,
+                locationName,
+                locationUrl
+            }`);
+            setEvents(data);
+        };
+
         fetchNews();
+        fetchEvents();
     }, []);
 
     return (
@@ -61,6 +83,63 @@ export default function Hero() {
                     <NewsCard key={item._id} item={item} index={index} />
                 ))}
             </div>
+
+            {/* Events Section */}
+            {events.length > 0 && (
+                <div className="mt-32 max-w-4xl mx-auto">
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-4xl font-serif text-center text-white mb-16"
+                    >
+                        Termine
+                    </motion.h2>
+
+                    <div className="space-y-12">
+                        {events.map((event, index) => (
+                            <motion.div
+                                key={event._id}
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 }}
+                                className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 border-b border-gray-800 pb-4"
+                            >
+                                <div className="flex flex-col text-left">
+                                    <span className="text-sm text-gray-400 uppercase tracking-widest mb-1">
+                                        {new Date(event.date).toLocaleDateString('de-DE', {
+                                            year: 'numeric',
+                                            month: '2-digit',
+                                            day: '2-digit'
+                                        })}
+                                    </span>
+                                    <span className="text-2xl font-serif font-medium text-white">
+                                        {event.title}
+                                    </span>
+                                </div>
+
+                                <div className="md:text-right">
+                                    {event.locationUrl ? (
+                                        <a
+                                            href={event.locationUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-lg text-gray-300 hover:text-white transition-colors"
+                                        >
+                                            {event.locationName}
+                                        </a>
+                                    ) : (
+                                        <span className="text-lg text-gray-300">
+                                            {event.locationName}
+                                        </span>
+                                    )}
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

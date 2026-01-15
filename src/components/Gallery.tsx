@@ -27,11 +27,11 @@ export default function Gallery() {
                 photos={photos}
                 onClick={({ index }) => setIndex(index)}
                 rowConstraints={{ maxPhotos: 3 }}
-                componentsProps={{
-                    imageProps: {
-                        className: "grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer rounded-sm"
-                    }
-                }}
+            /* componentsProps={{
+                imageProps: {
+                    className: "grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer rounded-sm"
+                }
+            }} */
             />
 
             <Lightbox

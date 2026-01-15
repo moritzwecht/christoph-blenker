@@ -1,0 +1,143 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { client } from '../sanity/lib/client';
+import { urlFor } from '../sanity/lib/image';
+import { PortableText } from '@portabletext/react';
+import { Instagram, Facebook, Youtube, Music2, Cloud, ExternalLink, Globe } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+interface Project {
+    _id: string;
+    title: string;
+    image: any;
+    description: any[];
+    members: { name: string; instrument: string }[];
+    websiteUrl: string;
+    socialLinks: { platform: string; url: string }[];
+}
+
+export default function Projects() {
+    const [projects, setProjects] = useState<Project[]>([]);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            const data = await client.fetch(`*[_type == "project"]{
+                _id,
+                title,
+                image,
+                description,
+                members,
+                websiteUrl,
+                socialLinks
+            }`);
+            setProjects(data);
+        };
+        fetchProjects();
+    }, []);
+
+    const getSocialIcon = (platform: string) => {
+        switch (platform.toLowerCase()) {
+            case 'instagram': return <Instagram className="w-5 h-5" />;
+            case 'facebook': return <Facebook className="w-5 h-5" />;
+            case 'youtube': return <Youtube className="w-5 h-5" />;
+            case 'spotify': return <Music2 className="w-5 h-5" />;
+            case 'soundcloud': return <Cloud className="w-5 h-5" />;
+            default: return <ExternalLink className="w-5 h-5" />;
+        }
+    };
+
+    if (projects.length === 0) return null;
+
+    return (
+        <section id="projects" className="py-24 bg-black text-white">
+            <div className="max-w-6xl mx-auto px-4 md:px-8">
+                <h2 className="text-4xl md:text-5xl font-serif mb-16 text-center">Projekte</h2>
+
+                <div className="space-y-16">
+                    {projects.map((project, index) => (
+                        <motion.div
+                            key={project._id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.6 }}
+                            className="bg-white text-gray-900 rounded-xl shadow-lg overflow-hidden grid md:grid-cols-2"
+                        >
+                            {/* Image Side */}
+                            <div className="h-64 md:h-full relative overflow-hidden bg-gray-200">
+                                {project.image ? (
+                                    <img
+                                        src={urlFor(project.image).width(800).height(800).url()}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                        No Image
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Content Side */}
+                            <div className="p-8 md:p-12 flex flex-col justify-center">
+                                <h3 className="text-3xl font-serif mb-6">{project.title}</h3>
+
+                                {project.description && (
+                                    <div className="prose prose-gray mb-8">
+                                        <PortableText value={project.description} />
+                                    </div>
+                                )}
+
+                                {project.members && project.members.length > 0 && (
+                                    <div className="mb-8">
+                                        <h4 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-3">Besetzung</h4>
+                                        <ul className="space-y-1">
+                                            {project.members.map((member, i) => (
+                                                <li key={i} className="text-gray-700">
+                                                    <span className="font-medium">{member.name}</span>
+                                                    {member.instrument && <span className="text-gray-500"> — {member.instrument}</span>}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                <div className="flex flex-wrap items-center gap-6 mt-auto pt-4 border-t border-gray-100">
+                                    {project.websiteUrl && (
+                                        <a
+                                            href={project.websiteUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 text-sm uppercase tracking-widest font-medium text-gray-900 hover:text-blue-600 transition-colors"
+                                        >
+                                            <Globe className="w-4 h-4" />
+                                            Zur Website
+                                        </a>
+                                    )}
+
+                                    {project.socialLinks && project.socialLinks.length > 0 && (
+                                        <div className="flex gap-4 ml-auto">
+                                            {project.socialLinks.map((link, i) => (
+                                                <a
+                                                    key={i}
+                                                    href={link.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-gray-400 hover:text-black transition-colors"
+                                                    title={link.platform}
+                                                >
+                                                    {getSocialIcon(link.platform)}
+                                                </a>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}

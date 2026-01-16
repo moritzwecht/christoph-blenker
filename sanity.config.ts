@@ -7,6 +7,7 @@
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
+import type { StructureBuilder } from 'sanity/structure'
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from './src/sanity/env'
@@ -23,7 +24,7 @@ export default defineConfig({
     schema,
     plugins: [
         structureTool({
-            structure: (S, context) => {
+            structure: (S: StructureBuilder, context: any) => {
                 return S.list()
                     .title('Inhalt')
                     .items([

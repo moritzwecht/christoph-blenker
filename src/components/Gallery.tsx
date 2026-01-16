@@ -6,7 +6,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import { client } from '../sanity/lib/client';
 import { urlFor } from '../sanity/lib/image';
-import SectionDivider from './SectionDivider';
+import { SectionDivider, Heading } from './design-system';
 
 interface GalleryImage {
     asset: any;
@@ -40,7 +40,7 @@ export default function Gallery() {
         <section id="gallery" className="section-padding relative bg-white text-gray-900 slant-both">
             <SectionDivider position="top" />
             <div className="px-4 md:px-8 max-w-[1200px] mx-auto">
-                <h2 className="text-4xl md:text-5xl font-serif mb-16 text-left">Galerie</h2>
+                <Heading level="h2" className="text-left mb-16">Galerie</Heading>
 
                 <Masonry
                     items={images}

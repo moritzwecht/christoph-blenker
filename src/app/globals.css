@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-inter: var(--font-inter);
-  --font-playfair: var(--font-playfair);
+  --font-sans: var(--font-roboto);
+  --font-serif: var(--font-playfair);
 }
 
 /* 
@@ -26,7 +26,7 @@ body {
   color: var(--foreground);
   background: radial-gradient(circle at center, #1a202c 0%, #000000 100%);
   min-height: 100vh;
-  font-family: var(--font-inter), sans-serif;
+  font-family: var(--font-roboto), sans-serif;
   overflow-x: hidden;
 }
 

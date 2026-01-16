@@ -1,6 +1,6 @@
 import { client } from '../sanity/lib/client';
-import SectionDivider from './SectionDivider';
 import RichText from './RichText';
+import { Heading, Section, Container } from './design-system';
 
 interface TeachingData {
     headline: string;
@@ -23,15 +23,16 @@ export default async function Teaching() {
     if (!data) return null;
 
     return (
-        <section id="teaching" className="section-padding bg-black text-white relative">
-            <SectionDivider position="top" />
-            <div className="max-w-[1200px] mx-auto px-4 md:px-8">
-                <h2 className="text-4xl md:text-5xl font-serif mb-16 text-left">{data.headline}</h2>
 
-                <div className="text-lg font-light leading-relaxed text-zinc-700">
+        <Section id="teaching" background="bg-amber-100" className="text-zinc-950" slant="bottom" dividerTop dividerBottom>
+            <Container>
+                <Heading level="h2" className="text-left mb-16">{data.headline}</Heading>
+
+                <div className="text-lg font-light leading-relaxed text-zinc-950">
                     <RichText value={data.text} />
                 </div>
-            </div>
-        </section>
+            </Container>
+        </Section>
     );
+
 }

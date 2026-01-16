@@ -6,8 +6,8 @@ import { client } from '../sanity/lib/client';
 import SanityImage from './SanityImage';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import SectionDivider from './SectionDivider';
 import RichText from './RichText';
+import { SectionDivider, Heading, Text, Label, Card, CardImage, CardContent } from './design-system';
 
 interface NewsItem {
     _id: string;
@@ -65,27 +65,20 @@ export default function Hero() {
     }, []);
 
     return (
-        <section id="home" className="min-h-screen section-padding relative">
+        <section id="home" className="section-padding relative">
             <SectionDivider position="bottom" />
             <div className="px-4 md:px-8 max-w-[1200px] mx-auto">
                 {/* Header */}
-                <div className="mb-20 text-center">
-                    <motion.h1
+                <div className="mb-15">
+                    <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-5xl md:text-8xl font-bold text-white mb-6 leading-tight font-serif"
                     >
-                        Christoph Blenker
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.4, duration: 0.8 }}
-                        className="text-gray-400 text-xl uppercase tracking-[0.2em]"
-                    >
-                        Musician & Composer
-                    </motion.p>
+                        <Heading level="h1" className="text-6xl md:text-6xl text-white">
+                            Christoph Blenker
+                        </Heading>
+                    </motion.div>
                 </div>
 
                 {/* News Grid */}
@@ -97,15 +90,17 @@ export default function Hero() {
 
                 {/* Events Section */}
                 {events.length > 0 && (
-                    <div className="mt-32 max-w-4xl mx-auto">
-                        <motion.h2
+                    <div className="mt-32 mx-auto">
+                        <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="text-4xl font-serif text-left text-white mb-16"
+                            className="mb-16"
                         >
-                            Termine
-                        </motion.h2>
+                            <Heading level="h2" className="text-left text-white mb-0">
+                                Termine
+                            </Heading>
+                        </motion.div>
 
                         <div className="space-y-12">
                             {events.map((event, index) => (
@@ -118,13 +113,13 @@ export default function Hero() {
                                     className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 border-b border-gray-800 pb-4"
                                 >
                                     <div className="flex flex-col text-left">
-                                        <span className="text-sm text-gray-400 uppercase tracking-widest mb-1">
+                                        <Label className="text-gray-400 mb-1">
                                             {new Date(event.date).toLocaleDateString('de-DE', {
                                                 year: 'numeric',
                                                 month: '2-digit',
                                                 day: '2-digit'
                                             })}
-                                        </span>
+                                        </Label>
                                         <span className="text-2xl font-serif font-medium text-white">
                                             {event.title}
                                         </span>
@@ -136,14 +131,14 @@ export default function Hero() {
                                                 href={event.locationUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-lg text-gray-300 hover:text-white transition-colors"
+                                                className="text-lg text-gray-300 hover:text-white transition-colors font-light leading-relaxed"
                                             >
                                                 {event.locationName}
                                             </a>
                                         ) : (
-                                            <span className="text-lg text-gray-300">
+                                            <Text className="text-gray-300 text-lg">
                                                 {event.locationName}
-                                            </span>
+                                            </Text>
                                         )}
                                     </div>
                                 </motion.div>
@@ -163,42 +158,45 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, delay: index * 0.1 }}
-            className="bg-white rounded-lg overflow-hidden group hover:shadow-2xl transition-shadow duration-300"
         >
-            {/* Image */}
-            {item.image && (
-                <div className="aspect-video w-full overflow-hidden relative">
-                    <SanityImage
-                        image={item.image}
-                        alt={item.title}
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                        cropRatio={16 / 9}
-                    />
-                </div>
-            )}
-
-            {/* Content */}
-            <div className="p-8">
-                <h3 className="text-2xl font-serif text-gray-900 mb-4 line-clamp-2">{item.title}</h3>
-
-                {/* Text Preview - converting block content to string for preview */}
-                <div className="text-gray-600 mb-8 line-clamp-3 leading-relaxed">
-                    <RichText value={item.text} />
-                </div>
-
-                {/* Button */}
-                {item.link && (
-                    <Link
-                        href={item.link}
-                        className="inline-flex items-center gap-2 text-sm uppercase tracking-widest font-medium text-gray-900 border-b border-gray-900 pb-1 hover:text-blue-600 hover:border-blue-600 transition-colors"
-                    >
-                        {item.linkText || 'Read More'}
-                        <span className="text-lg">→</span>
-                    </Link>
+            <Card className="group h-full">
+                {/* Image */}
+                {item.image && (
+                    <CardImage className="aspect-video w-full">
+                        <SanityImage
+                            image={item.image}
+                            alt={item.title}
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                            cropRatio={16 / 9}
+                        />
+                    </CardImage>
                 )}
-            </div>
+
+                {/* Content */}
+                <CardContent className="p-4">
+                    <Heading level="h3" className="mb-4 line-clamp-2">
+                        {item.title}
+                    </Heading>
+
+                    {/* Text Preview - converting block content to string for preview */}
+                    <div className="text-gray-600 mb-8 line-clamp-3 leading-relaxed">
+                        <RichText value={item.text} />
+                    </div>
+
+                    {/* Button */}
+                    {item.link && (
+                        <Link
+                            href={item.link}
+                            className="inline-flex items-center gap-2 text-sm uppercase tracking-widest font-medium text-gray-900 border-b border-gray-900 pb-1 hover:text-blue-600 hover:border-blue-600 transition-colors"
+                        >
+                            {item.linkText || 'Read More'}
+                            <span className="text-lg">→</span>
+                        </Link>
+                    )}
+                </CardContent>
+            </Card>
         </motion.div>
     );
 }

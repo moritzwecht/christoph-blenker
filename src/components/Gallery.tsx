@@ -37,10 +37,10 @@ export default function Gallery() {
     }));
 
     return (
-        <section id="gallery" className="section-padding relative">
+        <section id="gallery" className="section-padding relative bg-white text-gray-900 slant-both">
             <SectionDivider position="top" />
             <div className="px-4 md:px-8 max-w-[1200px] mx-auto">
-                <h2 className="text-4xl md:text-5xl font-serif text-white mb-16 text-left">Galerie</h2>
+                <h2 className="text-4xl md:text-5xl font-serif mb-16 text-left">Galerie</h2>
 
                 <Masonry
                     items={images}

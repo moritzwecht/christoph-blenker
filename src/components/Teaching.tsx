@@ -23,7 +23,7 @@ export default async function Teaching() {
     if (!data) return null;
 
     return (
-        <section id="teaching" className="section-padding bg-white text-zinc-900 relative">
+        <section id="teaching" className="section-padding bg-black text-white relative">
             <SectionDivider position="top" />
             <div className="max-w-[1200px] mx-auto px-4 md:px-8">
                 <h2 className="text-4xl md:text-5xl font-serif mb-16 text-left">{data.headline}</h2>

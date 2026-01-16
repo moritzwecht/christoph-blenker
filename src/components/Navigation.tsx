@@ -121,7 +121,7 @@ export default function Navigation() {
                 onClick={() => setIsOpen(true)}
                 className={clsx(
                     'fixed top-6 right-6 z-500 p-3 rounded-full transition-all duration-300 md:hidden',
-                    scrolled ? 'bg-white/10 backdrop-blur-md text-white' : 'text-gray-300 hover:text-white'
+                    scrolled ? 'bg-black/40 backdrop-blur-md text-white' : 'text-gray-300 hover:text-white'
                 )}
             >
                 <Menu size={32} />
@@ -138,7 +138,7 @@ export default function Navigation() {
                     >
                         <button
                             onClick={() => setIsOpen(false)}
-                            className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors"
+                            className="absolute top-6 right-6 p-3 rounded-full text-white/50 hover:text-white transition-colors"
                         >
                             <X size={32} />
                         </button>

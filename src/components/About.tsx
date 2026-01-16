@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { client } from '../sanity/lib/client';
-import { urlFor } from '../sanity/lib/image';
+// import { urlFor } from '../sanity/lib/image'; // Unused now
 import { PortableText } from '@portabletext/react';
+import SanityImage from './SanityImage';
 
 interface AboutData {
     headline: string;
@@ -18,7 +19,13 @@ export default function About() {
         const fetchData = async () => {
             const result = await client.fetch(`*[_type == "about"][0]{
                 headline,
-                image,
+                image {
+                    ...,
+                    asset->{
+                        ...,
+                        metadata
+                    }
+                },
                 text
             }`);
             setData(result);
@@ -32,12 +39,14 @@ export default function About() {
         <section id="about" className="py-24 bg-white text-gray-900">
             <div className="max-w-6xl mx-auto px-4 md:px-8">
                 <div className="grid md:grid-cols-2 gap-12">
-                    <div className="aspect-[3/4] bg-gray-200 rounded-sm overflow-hidden">
+                    <div className="aspect-[3/4] bg-gray-200 rounded-sm overflow-hidden relative">
                         {data.image && (
-                            <img
-                                src={urlFor(data.image).width(800).height(1067).url()}
+                            <SanityImage
+                                image={data.image}
                                 alt="Portrait"
-                                className="w-full h-full object-cover"
+                                className="object-cover"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
                             />
                         )}
                     </div>

@@ -2,7 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { client } from '../sanity/lib/client';
-import { urlFor } from '../sanity/lib/image';
+// import { urlFor } from '../sanity/lib/image';
+import SanityImage from './SanityImage';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -32,7 +33,13 @@ export default function Hero() {
             const data = await client.fetch(`*[_type == "news"]{
                 _id,
                 title,
-                image,
+                image {
+                    ...,
+                    asset->{
+                        ...,
+                        metadata
+                    }
+                },
                 text,
                 link,
                 linkText
@@ -156,10 +163,12 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
             {/* Image */}
             {item.image && (
                 <div className="aspect-video w-full overflow-hidden relative">
-                    <img
-                        src={urlFor(item.image).width(800).height(450).url()}
+                    <SanityImage
+                        image={item.image}
                         alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
                     />
                 </div>
             )}

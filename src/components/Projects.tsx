@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { client } from '../sanity/lib/client';
-import { urlFor } from '../sanity/lib/image';
+// import { urlFor } from '../sanity/lib/image'; // Unused now
+import SanityImage from './SanityImage';
 import { PortableText } from '@portabletext/react';
 import { Instagram, Facebook, Youtube, Music2, Cloud, ExternalLink, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -25,7 +26,13 @@ export default function Projects() {
             const data = await client.fetch(`*[_type == "project"]{
                 _id,
                 title,
-                image,
+                image {
+                    ...,
+                    asset->{
+                        ...,
+                        metadata
+                    }
+                },
                 description,
                 members,
                 websiteUrl,
@@ -67,10 +74,12 @@ export default function Projects() {
                             {/* Image Side */}
                             <div className="h-64 md:h-full relative overflow-hidden bg-gray-200">
                                 {project.image ? (
-                                    <img
-                                        src={urlFor(project.image).width(800).height(800).url()}
+                                    <SanityImage
+                                        image={project.image}
                                         alt={project.title}
-                                        className="w-full h-full object-cover"
+                                        className="object-cover"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center text-gray-400">

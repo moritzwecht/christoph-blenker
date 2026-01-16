@@ -169,6 +169,7 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                        cropRatio={16 / 9}
                     />
                 </div>
             )}

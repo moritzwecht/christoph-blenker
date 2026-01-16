@@ -11,24 +11,42 @@ interface SanityImageProps {
     priority?: boolean;
     fill?: boolean;
     sizes?: string;
+    cropRatio?: number;
 }
 
-export default function SanityImage({ image, alt, className, priority = false, fill = false, sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" }: SanityImageProps) {
-    const imageProps = useNextSanityImage(client, image);
+export default function SanityImage({ image, alt, className, priority = false, fill = false, sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw", cropRatio }: SanityImageProps) {
+    const imageProps = useNextSanityImage(client, image, {
+        imageBuilder: (imageUrlBuilder, options) => {
+            const builder = imageUrlBuilder;
+            // If cropRatio is defined and we have a requested width from Next.js 
+            if (cropRatio && options.width) {
+                return builder
+                    .width(options.width)
+                    .height(Math.round(options.width / cropRatio))
+                    .fit('crop');
+            }
+            return builder;
+        }
+    });
 
     if (!image || !imageProps) return null;
+
+    // Explicitly cast to any to avoid complex union type issues with next-sanity-image's return type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const props: any = imageProps;
 
     if (fill) {
         // When using fill, we need to handle object-fit via classNames usually, 
         // but next/image handles the src/loader. 
         // We just need to make sure we don't pass width/height which conflicts with fill.
-        const { width, height, ...restProps } = imageProps;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { width, height, ...restProps } = props;
 
         return (
             <Image
                 {...restProps}
-                src={imageProps.src}
-                loader={imageProps.loader}
+                src={props.src}
+                loader={props.loader}
                 alt={alt}
                 fill
                 className={className}
@@ -42,7 +60,7 @@ export default function SanityImage({ image, alt, className, priority = false, f
 
     return (
         <Image
-            {...imageProps}
+            {...props}
             alt={alt}
             className={className}
             priority={priority}

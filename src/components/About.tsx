@@ -47,6 +47,7 @@ export default function About() {
                                 className="object-cover"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
+                                cropRatio={3 / 4}
                             />
                         )}
                     </div>

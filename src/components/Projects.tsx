@@ -80,6 +80,7 @@ export default function Projects() {
                                         className="object-cover"
                                         fill
                                         sizes="(max-width: 768px) 100vw, 50vw"
+                                        cropRatio={1 / 1}
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center text-gray-400">

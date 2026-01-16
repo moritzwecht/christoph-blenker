@@ -22,6 +22,7 @@
     "react-dom": "19.2.3",
     "react-photo-album": "^3.4.0",
     "sanity": "^5.4.0",
+    "styled-components": "^6.3.8",
     "tailwind-merge": "^3.4.0",
     "yet-another-react-lightbox": "^3.28.0"
   },

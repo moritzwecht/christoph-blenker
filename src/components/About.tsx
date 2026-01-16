@@ -40,8 +40,9 @@ export default function About() {
 
         <Section id="about" background="bg-white" className="text-gray-900" slant="both" dividerTop>
             <Container>
+                <Heading level="h2">{data.headline}</Heading>
                 <div className="grid md:grid-cols-2 gap-12">
-                    <div className="aspect-[3/4] bg-gray-200 rounded-sm overflow-hidden relative">
+                    <div className="aspect-3/4 bg-gray-200 rounded-sm overflow-hidden relative">
                         {data.image && (
                             <SanityImage
                                 image={data.image}
@@ -54,12 +55,7 @@ export default function About() {
                         )}
                     </div>
 
-                    <div>
-                        <Heading level="h2" className="mb-8">{data.headline}</Heading>
-                        <div className="text-lg font-light leading-relaxed text-gray-600">
-                            <RichText value={data.text} />
-                        </div>
-                    </div>
+                    <RichText value={data.text} />
                 </div>
             </Container>
         </Section>

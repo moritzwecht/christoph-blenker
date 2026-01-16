@@ -7,9 +7,9 @@ interface RichTextProps {
 
 const components: PortableTextComponents = {
     block: {
-        normal: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
-        h3: ({ children }) => <h3 className="text-xl font-bold mb-4 mt-8 text-black">{children}</h3>,
-        h4: ({ children }) => <h4 className="text-lg font-bold mb-3 mt-6 text-black">{children}</h4>,
+        normal: ({ children }) => <p className="mb-6 last:mb-0">{children}</p>,
+        h3: ({ children }) => <h3 className="text-xl font-bold mb-4 text-black">{children}</h3>,
+        h4: ({ children }) => <h4 className="text-lg font-bold mb-4 text-black">{children}</h4>,
     },
     list: {
         bullet: ({ children }) => <ul className="list-disc pl-5 space-y-2 mb-4 ml-4">{children}</ul>,

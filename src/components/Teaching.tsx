@@ -26,7 +26,7 @@ export default async function Teaching() {
 
         <Section id="teaching" background="bg-amber-100" className="text-zinc-950" slant="bottom" dividerTop dividerBottom>
             <Container>
-                <Heading level="h2" className="text-left mb-16">{data.headline}</Heading>
+                <Heading level="h2" className="text-left">{data.headline}</Heading>
 
                 <div className="text-lg font-light leading-relaxed text-zinc-950">
                     <RichText value={data.text} />

@@ -97,7 +97,8 @@ export default function Hero() {
                             viewport={{ once: true }}
                             className="mb-16"
                         >
-                            <Heading level="h2" className="text-left text-white mb-0">
+                            <div id="dates" className="scroll-mt-32 invisible h-0" />
+                            <Heading level="h2" className="text-left text-white">
                                 Termine
                             </Heading>
                         </motion.div>

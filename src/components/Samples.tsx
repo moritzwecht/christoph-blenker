@@ -15,7 +15,7 @@ export default function Samples() {
     return (
         <section id="samples" className="section-padding bg-white text-gray-900 slant-both">
             <div className="max-w-[1200px] mx-auto px-4 md:px-8">
-                <Heading level="h2" className="text-left mb-16">Hörproben</Heading>
+                <Heading level="h2" className="text-left">Hörproben</Heading>
 
                 {/* Videos */}
                 <div className="grid md:grid-cols-2 gap-8 mb-24">
@@ -33,10 +33,10 @@ export default function Samples() {
                 </div>
 
                 {/* Audio Widgets */}
-                <div className="max-w-3xl mx-auto space-y-20">
+                <div className=" mx-auto space-y-20">
                     {/* Groovestanze */}
                     <div className="space-y-4">
-                        <Heading level="h3" className="mb-8 text-center text-3xl">Groovestanze</Heading>
+                        <Heading level="h3">Groovestanze</Heading>
                         <iframe
                             className="w-full"
                             scrolling="no"
@@ -55,7 +55,7 @@ export default function Samples() {
 
                     {/* Timeline */}
                     <div className="space-y-4">
-                        <Heading level="h3" className="mb-8 text-center text-3xl">Timeline</Heading>
+                        <Heading level="h3">Timeline</Heading>
                         <iframe
                             className="w-full"
                             scrolling="no"
@@ -74,7 +74,7 @@ export default function Samples() {
 
                     {/* Camouflage */}
                     <div className="space-y-4">
-                        <Heading level="h3" className="mb-8 text-center text-3xl">Camouflage</Heading>
+                        <Heading level="h3">Camouflage</Heading>
                         <iframe
                             className="w-full"
                             scrolling="no"

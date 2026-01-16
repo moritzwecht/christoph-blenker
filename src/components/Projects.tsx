@@ -61,7 +61,7 @@ export default function Projects() {
         <section id="projects" className="section-padding bg-black text-white slant-bottom relative">
             <SectionDivider position="top" />
             <div className="max-w-[1200px] mx-auto px-4 md:px-8">
-                <Heading level="h2" className="text-left mb-16 text-white">Projekte</Heading>
+                <Heading level="h2" className="text-left text-white">Projekte</Heading>
 
                 <div className="space-y-16">
                     {projects.map((project, index) => (
@@ -74,7 +74,7 @@ export default function Projects() {
                         >
                             <Card className="grid md:grid-cols-2">
                                 {/* Image Side */}
-                                <CardImage className="h-64 md:h-full">
+                                <CardImage className="h-100 md:h-full">
                                     {project.image ? (
                                         <SanityImage
                                             image={project.image}

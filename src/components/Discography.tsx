@@ -37,13 +37,13 @@ export default async function Discography() {
         <section id="discography" className="section-padding bg-black text-white slant-bottom relative">
             <SectionDivider position="top" />
             <div className="max-w-[1200px] mx-auto px-4 md:px-8">
-                <Heading level="h2" className="text-left mb-16">Diskographie</Heading>
+                <Heading level="h2">Diskographie</Heading>
 
                 <div className="space-y-6">
                     {items.map((item) => (
-                        <div key={item._id} className="flex flex-col md:flex-row gap-8 items-start md:items-center border-b border-zinc-800 pb-6 last:border-0 last:pb-0">
+                        <div key={item._id} className="flex flex-col md:flex-row gap-2 items-start md:items-center border-b border-zinc-800 pb-6 last:border-0 last:pb-0">
                             {/* Left: Cover */}
-                            <div className="w-full md:w-15 aspect-square relative shrink-0 bg-zinc-900 rounded-full overflow-hidden">
+                            <div className="w-12 md:w-15 aspect-square relative shrink-0 rounded-full overflow-hidden">
                                 {item.cover && (
                                     <Image
                                         src={urlFor(item.cover).url()}
@@ -57,7 +57,7 @@ export default async function Discography() {
 
                             {/* Middle: Title & Description */}
                             <div className="grow">
-                                <Heading level="h3" className="mb-2 text-2xl">{item.title}</Heading>
+                                <Text className="text-xl font-semibold">{item.title}</Text>
                                 <Text className="text-zinc-400 max-w-2xl">
                                     {item.description}
                                 </Text>
@@ -65,7 +65,7 @@ export default async function Discography() {
 
                             {/* Right: Button */}
                             {item.buttonText && (
-                                <div className="shrink-0 mt-4 md:mt-0">
+                                <div className="shrink-0">
                                     <a
                                         href={`mailto:${item.emailAddress}?subject=${encodeURIComponent(item.emailSubject || 'CD Bestellung')}`}
                                         className="inline-block px-8 py-3 bg-white text-black font-medium text-sm tracking-wider uppercase hover:bg-zinc-200 transition-colors"

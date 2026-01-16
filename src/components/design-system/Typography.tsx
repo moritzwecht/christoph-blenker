@@ -14,7 +14,7 @@ export function Heading({ level = 'h2', className, children, ...props }: Heading
 
     const styles = {
         h1: "text-5xl md:text-8xl font-bold leading-tight font-serif",
-        h2: "text-4xl md:text-5xl font-serif mb-16",
+        h2: "text-4xl md:text-5xl font-serif mb-8",
         h3: "text-3xl font-serif mb-6",
         h4: "text-xl font-bold mb-3 font-serif",
         h5: "text-lg font-bold font-serif",

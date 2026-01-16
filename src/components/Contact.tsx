@@ -5,7 +5,7 @@ export default function Contact() {
 
         <Section id="contact" background="bg-zinc-900" className="border-t border-zinc-800">
             <Container>
-                <Heading level="h2" className="text-white mb-12">Kontakt</Heading>
+                <Heading level="h2" className="text-white">Kontakt</Heading>
 
                 <div className="space-y-6">
                     <Text className="text-gray-400">

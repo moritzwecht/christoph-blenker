@@ -48,9 +48,9 @@ export default function Gallery() {
                 }}
                 render={(item, idx) => (
                     <div
-                        key={idx}
+                        key={item.asset._id || idx}
                         className="overflow-hidden rounded-sm cursor-pointer"
-                        onClick={() => setIndex(idx)}
+                        onClick={() => setIndex(images.indexOf(item))}
                     >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img

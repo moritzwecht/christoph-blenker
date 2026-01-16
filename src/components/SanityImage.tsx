@@ -5,7 +5,15 @@ import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 
 interface SanityImageProps {
-    image: any;
+    image: {
+        asset: {
+            _ref?: string;
+            _id?: string;
+            metadata?: { lqip?: string };
+        };
+        crop?: any;
+        hotspot?: any;
+    };
     alt: string;
     className?: string;
     priority?: boolean;
@@ -14,60 +22,49 @@ interface SanityImageProps {
     cropRatio?: number;
 }
 
-export default function SanityImage({ image, alt, className, priority = false, fill = false, sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw", cropRatio }: SanityImageProps) {
+export default function SanityImage({
+    image,
+    alt,
+    className,
+    priority = false,
+    fill = false,
+    sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px",
+    cropRatio
+}: SanityImageProps) {
+
     const imageProps = useNextSanityImage(client, image, {
-        imageBuilder: (imageUrlBuilder, options) => {
-            const builder = imageUrlBuilder;
-            // If cropRatio is defined and we have a requested width from Next.js 
+        imageBuilder: (builder, options) => {
+            let b = builder.auto('format'); // Automatisch modernste Formate (WebP/AVIF)
+
             if (cropRatio && options.width) {
-                return builder
-                    .width(options.width)
+                b = b.width(options.width)
                     .height(Math.round(options.width / cropRatio))
-                    .fit('crop');
+                    .fit('crop'); // Nutzt den Sanity-Hotspot beim Zuschneiden!
             }
-            return builder;
+            return b;
         }
     });
 
-    if (!image || !imageProps) return null;
+    if (!image?.asset || !imageProps) return null;
 
-    // Explicitly cast to any to avoid complex union type issues with next-sanity-image's return type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const props: any = imageProps;
+    const blurData = image.asset.metadata?.lqip;
 
-    if (fill) {
-        // When using fill, we need to handle object-fit via classNames usually, 
-        // but next/image handles the src/loader. 
-        // We just need to make sure we don't pass width/height which conflicts with fill.
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { width, height, ...restProps } = props;
-
-        return (
-            <Image
-                {...restProps}
-                src={props.src}
-                loader={props.loader}
-                alt={alt}
-                fill
-                className={className}
-                priority={priority}
-                placeholder={image?.asset?.metadata?.lqip ? 'blur' : 'empty'}
-                blurDataURL={image?.asset?.metadata?.lqip}
-                sizes={sizes}
-            />
-        );
-    }
+    const { width, height, ...rest } = imageProps;
 
     return (
         <Image
-            {...props}
+            {...rest}
+            width={fill ? undefined : width}
+            height={fill ? undefined : height}
             alt={alt}
-            className={className}
+            fill={fill}
             priority={priority}
-            placeholder={image?.asset?.metadata?.lqip ? 'blur' : 'empty'}
-            blurDataURL={image?.asset?.metadata?.lqip}
             sizes={sizes}
-            style={{ width: '100%', height: 'auto' }} // Responsive helper
+            className={className}
+            placeholder={blurData ? 'blur' : 'empty'}
+            blurDataURL={blurData}
+            // Verhindert Layout-Shift bei non-fill Bildern
+            style={!fill ? { width: '100%', height: 'auto' } : undefined}
         />
     );
 }

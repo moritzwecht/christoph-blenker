@@ -5,6 +5,11 @@
   --font-playfair: var(--font-playfair);
 }
 
+/* 
+  ---------------------------
+  BASE STYLES
+  ---------------------------
+*/
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -25,7 +30,12 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-playfair), serif;
 }
 
@@ -43,6 +53,70 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+/* 
+  ---------------------------
+  CUSTOM UTILITIES
+  ---------------------------
+*/
+@layer utilities {
+  .section-padding {
+    @apply py-32;
+  }
+
+  .slant-bottom {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3vw), 0 100%);
+    margin-bottom: -3vw;
+    position: relative;
+  }
+
+  .slant-top {
+    clip-path: polygon(0 3vw, 100% 0, 100% 100%, 0 100%);
+    margin-top: -3vw;
+    position: relative;
+  }
+
+  .slant-both {
+    clip-path: polygon(0 3vw, 100% 0, 100% calc(100% - 3vw), 0 100%);
+    margin-top: -3vw;
+    margin-bottom: -3vw;
+    position: relative;
+  }
+}
+
+/* 
+  ---------------------------
+  SECTION LAYERING (Z-INDEX)
+  Ensure correct overlap for slanted cuts
+  ---------------------------
+*/
+main>section {
+  position: relative;
+}
+
+main>section:nth-of-type(1) {
+  z-index: 50;
+}
+
+main>section:nth-of-type(2) {
+  z-index: 40;
+}
+
+main>section:nth-of-type(3) {
+  z-index: 30;
+}
+
+main>section:nth-of-type(4) {
+  z-index: 20;
+}
+
+main>section:nth-of-type(5) {
+  z-index: 10;
+}
+
+main>section:nth-of-type(6) {
+  z-index: 5;
+}
+
+main>section:nth-of-type(7) {
+  z-index: 1;
 }

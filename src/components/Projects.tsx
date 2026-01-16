@@ -7,6 +7,7 @@ import SanityImage from './SanityImage';
 import { PortableText } from '@portabletext/react';
 import { Instagram, Facebook, Youtube, Music2, Cloud, ExternalLink, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SectionDivider from './SectionDivider';
 
 interface Project {
     _id: string;
@@ -57,9 +58,10 @@ export default function Projects() {
     if (projects.length === 0) return null;
 
     return (
-        <section id="projects" className="py-24 bg-black text-white">
-            <div className="max-w-6xl mx-auto px-4 md:px-8">
-                <h2 className="text-4xl md:text-5xl font-serif mb-16 text-center">Projekte</h2>
+        <section id="projects" className="section-padding bg-black text-white slant-bottom relative">
+            <SectionDivider position="top" />
+            <div className="max-w-[1200px] mx-auto px-4 md:px-8">
+                <h2 className="text-4xl md:text-5xl font-serif mb-16 text-left">Projekte</h2>
 
                 <div className="space-y-16">
                     {projects.map((project, index) => (
@@ -148,6 +150,7 @@ export default function Projects() {
                     ))}
                 </div>
             </div>
+            <SectionDivider position="bottom" />
         </section>
     );
 }

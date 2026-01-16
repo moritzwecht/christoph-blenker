@@ -6,6 +6,8 @@ import { client } from '../sanity/lib/client';
 import SanityImage from './SanityImage';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import SectionDivider from './SectionDivider';
+import RichText from './RichText';
 
 interface NewsItem {
     _id: string;
@@ -30,7 +32,7 @@ export default function Hero() {
 
     useEffect(() => {
         const fetchNews = async () => {
-            const data = await client.fetch(`*[_type == "news"]{
+            const data = await client.fetch(`*[_type == "news"]|order(orderRank){
                 _id,
                 title,
                 image {
@@ -48,7 +50,7 @@ export default function Hero() {
         };
 
         const fetchEvents = async () => {
-            const data = await client.fetch(`*[_type == "event"] | order(date asc) {
+            const data = await client.fetch(`*[_type == "event"]|order(orderRank){
                 _id,
                 title,
                 date,
@@ -63,90 +65,93 @@ export default function Hero() {
     }, []);
 
     return (
-        <section id="home" className="min-h-screen pt-32 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="mb-20 text-center">
-                <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="text-5xl md:text-8xl font-bold text-white mb-6 leading-tight font-serif"
-                >
-                    Christoph Blenker
-                </motion.h1>
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
-                    className="text-gray-400 text-xl uppercase tracking-[0.2em]"
-                >
-                    Musician & Composer
-                </motion.p>
-            </div>
-
-            {/* News Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {news.map((item, index) => (
-                    <NewsCard key={item._id} item={item} index={index} />
-                ))}
-            </div>
-
-            {/* Events Section */}
-            {events.length > 0 && (
-                <div className="mt-32 max-w-4xl mx-auto">
-                    <motion.h2
+        <section id="home" className="min-h-screen section-padding relative">
+            <SectionDivider position="bottom" />
+            <div className="px-4 md:px-8 max-w-[1200px] mx-auto">
+                {/* Header */}
+                <div className="mb-20 text-center">
+                    <motion.h1
                         initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-4xl font-serif text-center text-white mb-16"
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-5xl md:text-8xl font-bold text-white mb-6 leading-tight font-serif"
                     >
-                        Termine
-                    </motion.h2>
-
-                    <div className="space-y-12">
-                        {events.map((event, index) => (
-                            <motion.div
-                                key={event._id}
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 border-b border-gray-800 pb-4"
-                            >
-                                <div className="flex flex-col text-left">
-                                    <span className="text-sm text-gray-400 uppercase tracking-widest mb-1">
-                                        {new Date(event.date).toLocaleDateString('de-DE', {
-                                            year: 'numeric',
-                                            month: '2-digit',
-                                            day: '2-digit'
-                                        })}
-                                    </span>
-                                    <span className="text-2xl font-serif font-medium text-white">
-                                        {event.title}
-                                    </span>
-                                </div>
-
-                                <div className="md:text-right">
-                                    {event.locationUrl ? (
-                                        <a
-                                            href={event.locationUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-lg text-gray-300 hover:text-white transition-colors"
-                                        >
-                                            {event.locationName}
-                                        </a>
-                                    ) : (
-                                        <span className="text-lg text-gray-300">
-                                            {event.locationName}
-                                        </span>
-                                    )}
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                        Christoph Blenker
+                    </motion.h1>
+                    <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4, duration: 0.8 }}
+                        className="text-gray-400 text-xl uppercase tracking-[0.2em]"
+                    >
+                        Musician & Composer
+                    </motion.p>
                 </div>
-            )}
+
+                {/* News Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {news.map((item, index) => (
+                        <NewsCard key={item._id} item={item} index={index} />
+                    ))}
+                </div>
+
+                {/* Events Section */}
+                {events.length > 0 && (
+                    <div className="mt-32 max-w-4xl mx-auto">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-4xl font-serif text-left text-white mb-16"
+                        >
+                            Termine
+                        </motion.h2>
+
+                        <div className="space-y-12">
+                            {events.map((event, index) => (
+                                <motion.div
+                                    key={event._id}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 border-b border-gray-800 pb-4"
+                                >
+                                    <div className="flex flex-col text-left">
+                                        <span className="text-sm text-gray-400 uppercase tracking-widest mb-1">
+                                            {new Date(event.date).toLocaleDateString('de-DE', {
+                                                year: 'numeric',
+                                                month: '2-digit',
+                                                day: '2-digit'
+                                            })}
+                                        </span>
+                                        <span className="text-2xl font-serif font-medium text-white">
+                                            {event.title}
+                                        </span>
+                                    </div>
+
+                                    <div className="md:text-right">
+                                        {event.locationUrl ? (
+                                            <a
+                                                href={event.locationUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-lg text-gray-300 hover:text-white transition-colors"
+                                            >
+                                                {event.locationName}
+                                            </a>
+                                        ) : (
+                                            <span className="text-lg text-gray-300">
+                                                {event.locationName}
+                                            </span>
+                                        )}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
         </section>
     );
 }
@@ -180,9 +185,7 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
 
                 {/* Text Preview - converting block content to string for preview */}
                 <div className="text-gray-600 mb-8 line-clamp-3 leading-relaxed">
-                    {item.text?.map((block: any) =>
-                        block.children?.map((child: any) => child.text).join('')
-                    ).join(' ')}
+                    <RichText value={item.text} />
                 </div>
 
                 {/* Button */}

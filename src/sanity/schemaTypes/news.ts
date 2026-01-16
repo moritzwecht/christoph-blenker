@@ -1,10 +1,15 @@
 import { defineField, defineType } from 'sanity'
+import { Newspaper } from 'lucide-react'
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
 
 export default defineType({
     name: 'news',
     title: 'Neuigkeiten',
     type: 'document',
+    icon: Newspaper,
+    orderings: [orderRankOrdering],
     fields: [
+        orderRankField({ type: 'news' }),
         defineField({
             name: 'title',
             title: 'Title',

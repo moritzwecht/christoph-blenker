@@ -4,16 +4,16 @@ export default function Samples() {
     const videos = [
         "azDuf2hNBAs",
         "TCrkbL7zYpE",
-        "aCvVWkMlgeM", // User had "R_sttncpoSM" commented out, using this one
-        "87i4M4FL0mo", // User had "lMjebhvaW_g" commented out
+        "aCvVWkMlgeM",
+        "87i4M4FL0mo",
         "SHXrEHsncWk",
         "54cg5t1FfM8"
     ];
 
     return (
-        <section id="samples" className="py-24 bg-white text-gray-900">
-            <div className="max-w-6xl mx-auto px-4 md:px-8">
-                <h2 className="text-4xl md:text-5xl font-serif mb-16 text-center">Hörproben</h2>
+        <section id="samples" className="section-padding bg-white text-gray-900 slant-both">
+            <div className="max-w-[1200px] mx-auto px-4 md:px-8">
+                <h2 className="text-4xl md:text-5xl font-serif mb-16 text-left">Hörproben</h2>
 
                 {/* Videos */}
                 <div className="grid md:grid-cols-2 gap-8 mb-24">

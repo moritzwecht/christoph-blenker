@@ -1,10 +1,15 @@
 import { defineField, defineType } from 'sanity'
+import { Calendar } from 'lucide-react'
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
 
 export default defineType({
     name: 'event',
-    title: 'Termin',
+    title: 'Termine',
     type: 'document',
+    icon: Calendar,
+    orderings: [orderRankOrdering],
     fields: [
+        orderRankField({ type: 'event' }),
         defineField({
             name: 'title',
             title: 'Titel',

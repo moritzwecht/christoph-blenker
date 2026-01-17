@@ -12,44 +12,44 @@ import Footer from "@/components/Footer";
 import { client } from "@/sanity/lib/client";
 
 export default async function Home() {
-  const news = await client.fetch(`*[_type == "news"]|order(orderRank){
-      _id,
-      title,
-      image {
-          ...,
-          asset->{
-              ...,
-              metadata
-          }
-      },
-      text,
-      link,
-      linkText
-  }`);
-
-  const events = await client.fetch(`*[_type == "event"]|order(orderRank){
-      _id,
-      title,
-      date,
-      locationName,
-      locationUrl
-  }`);
-
-  const projects = await client.fetch(`*[_type == "project"]{
-      _id,
-      title,
-      image {
-          ...,
-          asset->{
-              ...,
-              metadata
-          }
-      },
-      description,
-      members,
-      websiteUrl,
-      socialLinks
-  }`);
+  const [news, events, projects] = await Promise.all([
+    client.fetch(`*[_type == "news"]|order(orderRank){
+        _id,
+        title,
+        image {
+            ...,
+            asset->{
+                ...,
+                metadata
+            }
+        },
+        text,
+        link,
+        linkText
+    }`),
+    client.fetch(`*[_type == "event"]|order(orderRank){
+        _id,
+        title,
+        date,
+        locationName,
+        locationUrl
+    }`),
+    client.fetch(`*[_type == "project"]{
+        _id,
+        title,
+        image {
+            ...,
+            asset->{
+                ...,
+                metadata
+            }
+        },
+        description,
+        members,
+        websiteUrl,
+        socialLinks
+    }`)
+  ]);
 
   return (
     <main className="min-h-screen relative">

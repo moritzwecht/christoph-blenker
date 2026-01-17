@@ -42,15 +42,11 @@ export default function Hero({ news, events }: HeroProps) {
             <div className="px-4 md:px-8 max-w-[1200px] mx-auto w-full relative z-10">
                 {/* Header */}
                 <div className="mb-15">
-                    <motion.div
-                        initial={{ y: 20 }}
-                        animate={{ y: 0 }}
-                        transition={{ duration: 0.8 }}
-                    >
+                    <div>
                         <Heading level="h1" className="text-6xl md:text-6xl text-white">
                             Christoph Blenker
                         </Heading>
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* News Grid */}

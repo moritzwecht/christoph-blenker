@@ -1,7 +1,15 @@
+'use client';
+
+import { useState } from 'react';
 import { Container } from './design-system';
+import Modal from './Modal';
+import Impressum from './Impressum';
+import Datenschutz from './Datenschutz';
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
+    const [isImpressumOpen, setIsImpressumOpen] = useState(false);
+    const [isDatenschutzOpen, setIsDatenschutzOpen] = useState(false);
 
     return (
         <footer className="bg-black pt-24 pb-8 border-t border-zinc-900 text-sm">
@@ -25,11 +33,37 @@ export default function Footer() {
                 <div className="mt-16 pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-600 text-xs">
                     <p>&copy; {currentYear} Christoph Blenker. All rights reserved.</p>
                     <div className="space-x-6">
-                        <a href="/impressum" className="hover:text-zinc-400 transition-colors">Impressum</a>
-                        <a href="/datenschutz" className="hover:text-zinc-400 transition-colors">Datenschutz</a>
+                        <button
+                            onClick={() => setIsImpressumOpen(true)}
+                            className="hover:text-zinc-400 transition-colors"
+                        >
+                            Impressum
+                        </button>
+                        <button
+                            onClick={() => setIsDatenschutzOpen(true)}
+                            className="hover:text-zinc-400 transition-colors"
+                        >
+                            Datenschutz
+                        </button>
                     </div>
                 </div>
             </Container>
+
+            <Modal
+                isOpen={isImpressumOpen}
+                onClose={() => setIsImpressumOpen(false)}
+                title="Impressum"
+            >
+                <Impressum />
+            </Modal>
+
+            <Modal
+                isOpen={isDatenschutzOpen}
+                onClose={() => setIsDatenschutzOpen(false)}
+                title="Datenschutzerklärung"
+            >
+                <Datenschutz />
+            </Modal>
         </footer>
     );
 }

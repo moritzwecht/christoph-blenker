@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { client } from '../sanity/lib/client';
 // import { urlFor } from '../sanity/lib/image';
@@ -65,9 +66,9 @@ export default function Hero() {
     }, []);
 
     return (
-        <section id="home" className="section-padding relative">
+        <section id="home" className="section-padding relative min-h-screen flex flex-col justify-center">
             <SectionDivider position="bottom" />
-            <div className="px-4 md:px-8 max-w-[1200px] mx-auto">
+            <div className="px-4 md:px-8 max-w-[1200px] mx-auto w-full relative z-10">
                 {/* Header */}
                 <div className="mb-15">
                     <motion.div
@@ -160,7 +161,7 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, delay: index * 0.1 }}
         >
-            <Card className="group h-full">
+            <Card className="h-full">
                 {/* Image */}
                 {item.image && (
                     <CardImage className="aspect-video w-full">
@@ -176,13 +177,13 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
                 )}
 
                 {/* Content */}
-                <CardContent className="p-4">
-                    <Heading level="h3" className="mb-4 line-clamp-2">
+                <CardContent>
+                    <Text className="font-bold line-clamp-2">
                         {item.title}
-                    </Heading>
+                    </Text>
 
                     {/* Text Preview - converting block content to string for preview */}
-                    <div className="text-gray-600 mb-8 line-clamp-3 leading-relaxed">
+                    <div className="text-gray-600 mb-2 line-clamp-3 leading-relaxed">
                         <RichText value={item.text} />
                     </div>
 
@@ -190,7 +191,7 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
                     {item.link && (
                         <Link
                             href={item.link}
-                            className="inline-flex items-center gap-2 text-sm uppercase tracking-widest font-medium text-gray-900 border-b border-gray-900 pb-1 hover:text-blue-600 hover:border-blue-600 transition-colors"
+                            className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 border-b border-gray-900 hover:text-blue-600 hover:border-blue-600 transition-colors"
                         >
                             {item.linkText || 'Read More'}
                             <span className="text-lg">→</span>

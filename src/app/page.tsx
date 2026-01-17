@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
+import HeroBackground from "@/components/HeroBackground";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Samples from "@/components/Samples";
@@ -12,6 +13,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <main className="min-h-screen relative">
+      <HeroBackground />
       <Navigation />
 
       <Hero />

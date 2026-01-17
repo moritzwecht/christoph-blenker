@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { client } from '../sanity/lib/client';
 // import { urlFor } from '../sanity/lib/image'; // Unused now
@@ -58,7 +59,21 @@ export default function Projects() {
     if (projects.length === 0) return null;
 
     return (
-        <section id="projects" className="section-padding bg-black text-white slant-bottom relative">
+        <section
+            id="projects"
+            className="section-padding bg-black text-white slant-bottom relative"
+            style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 3vw), 0 100%)' }}
+        >
+            {/* Parallax Background */}
+            <div className="fixed inset-0 w-full h-full -z-50 bg-black">
+                <Image
+                    src="/projects-bg.png"
+                    alt="Projects Background"
+                    fill
+                    className="object-cover opacity-60"
+                />
+            </div>
+
             <SectionDivider position="top" />
             <div className="max-w-[1200px] mx-auto px-4 md:px-8">
                 <Heading level="h2" className="text-left text-white">Projekte</Heading>

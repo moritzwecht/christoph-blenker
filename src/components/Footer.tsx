@@ -30,18 +30,18 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-16 pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-600 text-xs">
+                <div className="mt-16 pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4 text-white text-xs">
                     <p>&copy; {currentYear} Christoph Blenker. All rights reserved.</p>
                     <div className="space-x-6">
                         <button
                             onClick={() => setIsImpressumOpen(true)}
-                            className="hover:text-zinc-400 transition-colors"
+                            className="hover:text-white transition-colors"
                         >
                             Impressum
                         </button>
                         <button
                             onClick={() => setIsDatenschutzOpen(true)}
-                            className="hover:text-zinc-400 transition-colors"
+                            className="hover:text-white transition-colors"
                         >
                             Datenschutz
                         </button>

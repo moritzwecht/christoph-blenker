@@ -1,12 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { client } from '../sanity/lib/client';
-// import { urlFor } from '../sanity/lib/image';
-import SanityImage from './SanityImage';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import SanityImage from './SanityImage';
 import RichText from './RichText';
 import { SectionDivider, Heading, Text, Label, Card, CardImage, CardContent } from './design-system';
 
@@ -33,9 +28,6 @@ interface HeroProps {
 }
 
 export default function Hero({ news, events }: HeroProps) {
-    // Data is now passed from parent (Server Component)
-    // No client-side fetching to improve LCP/FCP
-
     return (
         <section id="home" className="section-padding relative min-h-screen flex flex-col justify-center">
             <SectionDivider position="bottom" />
@@ -52,33 +44,24 @@ export default function Hero({ news, events }: HeroProps) {
                 {/* News Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {news.map((item, index) => (
-                        <NewsCard key={item._id} item={item} index={index} />
+                        <NewsCard key={item._id} item={item} />
                     ))}
                 </div>
 
                 {/* Events Section */}
                 {events.length > 0 && (
                     <div className="mt-32 mx-auto">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="mb-16"
-                        >
+                        <div className="mb-16">
                             <div id="dates" className="scroll-mt-32 invisible h-0" />
                             <Heading level="h2" className="text-left text-white">
                                 Termine
                             </Heading>
-                        </motion.div>
+                        </div>
 
                         <div className="space-y-12">
-                            {events.map((event, index) => (
-                                <motion.div
+                            {events.map((event) => (
+                                <div
                                     key={event._id}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1 }}
                                     className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 border-b border-gray-800 pb-4"
                                 >
                                     <div className="flex flex-col text-left">
@@ -110,7 +93,7 @@ export default function Hero({ news, events }: HeroProps) {
                                             </Text>
                                         )}
                                     </div>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -120,14 +103,9 @@ export default function Hero({ news, events }: HeroProps) {
     );
 }
 
-function NewsCard({ item, index }: { item: NewsItem; index: number }) {
+function NewsCard({ item }: { item: NewsItem }) {
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: index * 0.1 }}
-        >
+        <div className="h-full">
             <Card className="h-full">
                 {/* Image */}
                 {item.image && (
@@ -166,6 +144,6 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
                     )}
                 </CardContent>
             </Card>
-        </motion.div>
+        </div>
     );
 }

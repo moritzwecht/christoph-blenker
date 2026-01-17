@@ -26,14 +26,14 @@ export default async function Home() {
         text,
         link,
         linkText
-    }`),
+    }`, {}, { next: { revalidate: 3600 } }),
     client.fetch(`*[_type == "event"]|order(orderRank){
         _id,
         title,
         date,
         locationName,
         locationUrl
-    }`),
+    }`, {}, { next: { revalidate: 3600 } }),
     client.fetch(`*[_type == "project"]{
         _id,
         title,
@@ -48,7 +48,7 @@ export default async function Home() {
         members,
         websiteUrl,
         socialLinks
-    }`)
+    }`, {}, { next: { revalidate: 3600 } })
   ]);
 
   return (

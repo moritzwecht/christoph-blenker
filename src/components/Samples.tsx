@@ -22,6 +22,7 @@ export default function Samples() {
                     {videos.map((id) => (
                         <div key={id} className="aspect-video bg-gray-100 rounded-lg overflow-hidden shadow-sm relative">
                             <iframe
+                                title={`YouTube Video ${id}`}
                                 src={`https://www.youtube.com/embed/${id}`}
                                 className="absolute top-0 left-0 w-full h-full"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -38,6 +39,7 @@ export default function Samples() {
                     <div className="space-y-4">
                         <Heading level="h3">Groovestanze</Heading>
                         <iframe
+                            title="Groovestanze Player 1"
                             className="w-full"
                             scrolling="no"
                             frameBorder="no"
@@ -45,6 +47,7 @@ export default function Samples() {
                             style={{ minWidth: '100%', maxWidth: '100%' }}
                         />
                         <iframe
+                            title="Groovestanze Player 2"
                             className="w-full"
                             scrolling="no"
                             frameBorder="no"
@@ -57,6 +60,7 @@ export default function Samples() {
                     <div className="space-y-4">
                         <Heading level="h3">Timeline</Heading>
                         <iframe
+                            title="Timeline Player 1"
                             className="w-full"
                             scrolling="no"
                             frameBorder="no"
@@ -64,6 +68,7 @@ export default function Samples() {
                             style={{ minWidth: '100%', maxWidth: '100%' }}
                         />
                         <iframe
+                            title="Timeline Player 2"
                             className="w-full"
                             scrolling="no"
                             frameBorder="no"
@@ -76,6 +81,7 @@ export default function Samples() {
                     <div className="space-y-4">
                         <Heading level="h3">Camouflage</Heading>
                         <iframe
+                            title="Camouflage Player 1"
                             className="w-full"
                             scrolling="no"
                             frameBorder="no"
@@ -83,6 +89,7 @@ export default function Samples() {
                             style={{ minWidth: '100%', maxWidth: '100%' }}
                         />
                         <iframe
+                            title="Camouflage Player 2"
                             className="w-full"
                             scrolling="no"
                             frameBorder="no"
@@ -90,6 +97,7 @@ export default function Samples() {
                             style={{ minWidth: '100%', maxWidth: '100%' }}
                         />
                         <iframe
+                            title="Camouflage Player 3"
                             className="w-full"
                             scrolling="no"
                             frameBorder="no"

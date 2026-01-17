@@ -1,13 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { client } from '../sanity/lib/client';
-// import { urlFor } from '../sanity/lib/image'; // Unused now
 import SanityImage from './SanityImage';
 import { PortableText } from '@portabletext/react';
 import { Instagram, Facebook, Youtube, Music2, Cloud, ExternalLink, Globe } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { SectionDivider, Heading, Label, Card, CardImage, CardContent } from './design-system';
 
 interface Project {
@@ -63,12 +59,8 @@ export default function Projects({ projects }: ProjectsProps) {
 
                 <div className="space-y-16">
                     {projects.map((project, index) => (
-                        <motion.div
+                        <div
                             key={project._id}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-100px" }}
-                            transition={{ duration: 0.6 }}
                         >
                             <Card className="grid md:grid-cols-2">
                                 {/* Image Side */}
@@ -120,6 +112,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-2 text-sm uppercase tracking-widest font-medium text-gray-900 hover:text-blue-600 transition-colors"
+                                                aria-label={`Visit website for ${project.title}`}
                                             >
                                                 <Globe className="w-4 h-4" />
                                                 Zur Website
@@ -136,6 +129,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                                         rel="noopener noreferrer"
                                                         className="text-gray-400 hover:text-black transition-colors"
                                                         title={link.platform}
+                                                        aria-label={`${link.platform} for ${project.title}`}
                                                     >
                                                         {getSocialIcon(link.platform)}
                                                     </a>
@@ -145,7 +139,7 @@ export default function Projects({ projects }: ProjectsProps) {
                                     </div>
                                 </CardContent>
                             </Card>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>

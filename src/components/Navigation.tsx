@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import clsx from 'clsx';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems = [
     { name: 'News', href: '#home' },
@@ -103,10 +102,8 @@ export default function Navigation() {
                                 )}
                             >
                                 {isActive && (
-                                    <motion.div
-                                        layoutId="active-nav-pill"
+                                    <div
                                         className="absolute inset-0 bg-gray-800 border-b-2 border-white -z-10"
-                                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                     />
                                 )}
                                 {item.name}
@@ -119,6 +116,7 @@ export default function Navigation() {
             {/* Mobile Menu Button - Hide on Tablet/Desktop since we have the bar */}
             <button
                 onClick={() => setIsOpen(true)}
+                aria-label="Open menu"
                 className={clsx(
                     'fixed top-6 right-6 z-500 p-3 rounded-full transition-all duration-300 md:hidden',
                     scrolled ? 'bg-black/40 backdrop-blur-md text-white' : 'text-gray-300 hover:text-white'
@@ -128,35 +126,31 @@ export default function Navigation() {
             </button>
 
             {/* Mobile Overlay */}
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-600 bg-black/90 backdrop-blur-xl flex items-center justify-center md:hidden"
+            {isOpen && (
+                <div
+                    className="fixed inset-0 z-600 bg-black/90 backdrop-blur-xl flex items-center justify-center md:hidden"
+                >
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        aria-label="Close menu"
+                        className="absolute top-6 right-6 p-3 rounded-full text-white/50 hover:text-white transition-colors"
                     >
-                        <button
-                            onClick={() => setIsOpen(false)}
-                            className="absolute top-6 right-6 p-3 rounded-full text-white/50 hover:text-white transition-colors"
-                        >
-                            <X size={32} />
-                        </button>
+                        <X size={32} />
+                    </button>
 
-                        <nav className="flex flex-col items-center gap-6">
-                            {navItems.map((item) => (
-                                <button
-                                    key={item.name}
-                                    onClick={() => scrollToSection(item.href)}
-                                    className="text-2xl font-serif text-white/80 hover:text-white hover:scale-105 transition-all"
-                                >
-                                    {item.name}
-                                </button>
-                            ))}
-                        </nav>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                    <nav className="flex flex-col items-center gap-6">
+                        {navItems.map((item) => (
+                            <button
+                                key={item.name}
+                                onClick={() => scrollToSection(item.href)}
+                                className="text-2xl font-serif text-white/80 hover:text-white hover:scale-105 transition-all"
+                            >
+                                {item.name}
+                            </button>
+                        ))}
+                    </nav>
+                </div>
+            )}
         </>
     );
 }

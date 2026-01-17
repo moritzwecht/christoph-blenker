@@ -11,7 +11,7 @@ export default function HeroBackground() {
                 fill
                 className="object-cover opacity-80"
                 priority
-                quality={90}
+                quality={80}
             />
             <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black" />
         </div>

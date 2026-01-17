@@ -20,30 +20,13 @@ interface Project {
     socialLinks: { platform: string; url: string }[];
 }
 
-export default function Projects() {
-    const [projects, setProjects] = useState<Project[]>([]);
+interface ProjectsProps {
+    projects: Project[];
+}
 
-    useEffect(() => {
-        const fetchProjects = async () => {
-            const data = await client.fetch(`*[_type == "project"]{
-                _id,
-                title,
-                image {
-                    ...,
-                    asset->{
-                        ...,
-                        metadata
-                    }
-                },
-                description,
-                members,
-                websiteUrl,
-                socialLinks
-            }`);
-            setProjects(data);
-        };
-        fetchProjects();
-    }, []);
+export default function Projects({ projects }: ProjectsProps) {
+    // Data passed from server component
+
 
     const getSocialIcon = (platform: string) => {
         switch (platform.toLowerCase()) {

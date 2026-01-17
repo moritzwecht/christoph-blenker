@@ -27,43 +27,14 @@ interface EventItem {
     locationUrl: string;
 }
 
-export default function Hero() {
-    const [news, setNews] = useState<NewsItem[]>([]);
-    const [events, setEvents] = useState<EventItem[]>([]);
+interface HeroProps {
+    news: NewsItem[];
+    events: EventItem[];
+}
 
-    useEffect(() => {
-        const fetchNews = async () => {
-            const data = await client.fetch(`*[_type == "news"]|order(orderRank){
-                _id,
-                title,
-                image {
-                    ...,
-                    asset->{
-                        ...,
-                        metadata
-                    }
-                },
-                text,
-                link,
-                linkText
-            }`);
-            setNews(data);
-        };
-
-        const fetchEvents = async () => {
-            const data = await client.fetch(`*[_type == "event"]|order(orderRank){
-                _id,
-                title,
-                date,
-                locationName,
-                locationUrl
-            }`);
-            setEvents(data);
-        };
-
-        fetchNews();
-        fetchEvents();
-    }, []);
+export default function Hero({ news, events }: HeroProps) {
+    // Data is now passed from parent (Server Component)
+    // No client-side fetching to improve LCP/FCP
 
     return (
         <section id="home" className="section-padding relative min-h-screen flex flex-col justify-center">
@@ -72,8 +43,8 @@ export default function Hero() {
                 {/* Header */}
                 <div className="mb-15">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={{ y: 20 }}
+                        animate={{ y: 0 }}
                         transition={{ duration: 0.8 }}
                     >
                         <Heading level="h1" className="text-6xl md:text-6xl text-white">

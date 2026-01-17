@@ -13,7 +13,7 @@ export default function HeroBackground() {
                 priority
                 quality={90}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black" />
+            <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black" />
         </div>
     );
 }

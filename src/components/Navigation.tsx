@@ -20,56 +20,53 @@ export default function Navigation() {
     const [scrolled, setScrolled] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
 
-    // Scroll Spy using explicit positions for maximum reliability
+    // Scroll Spy using IntersectionObserver
     useEffect(() => {
-        const handleScrollSpy = () => {
-            const scrollPosition = window.scrollY;
-            const windowHeight = window.innerHeight;
-            // Target line is 35% down the screen
-            const indicatorPosition = scrollPosition + (windowHeight * 0.35);
-            setScrolled(scrollPosition > 50);
-
-            // Get all sections
-            const sections = navItems.map(item => {
-                const id = item.href.replace('#', '');
-                const element = document.getElementById(id);
-                if (!element) return null;
-                return {
-                    id: item.href.replace('#', ''),
-                    offsetTop: element.offsetTop,
-                    offsetHeight: element.offsetHeight
-                };
-            }).filter((section): section is { id: string, offsetTop: number, offsetHeight: number } => section !== null);
-
-            // Find the section that contains the indicator position
-            let currentSection = sections[0]?.id || 'home';
-
-            for (const section of sections) {
-                if (indicatorPosition >= section.offsetTop && indicatorPosition < (section.offsetTop + section.offsetHeight)) {
-                    currentSection = section.id;
-                    break;
-                }
-            }
-
-            // Special case: if we are at the very bottom of the page, activate the last item (Contact)
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
-                const lastSection = sections[sections.length - 1];
-                if (lastSection) currentSection = lastSection.id;
-            }
-
-            setActiveSection(currentSection);
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 50);
         };
 
-        // Initial check
-        handleScrollSpy();
+        window.addEventListener('scroll', handleScroll);
 
-        window.addEventListener('scroll', handleScrollSpy);
-        // Also listen to resize in case offsets change
-        window.addEventListener('resize', handleScrollSpy);
+        // Initial check
+        handleScroll();
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-35% 0px -35% 0px', // Active when element is in the middle 30% of screen
+            threshold: 0
+        };
+
+        const observerCallback: IntersectionObserverCallback = (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        navItems.forEach((item) => {
+            const id = item.href.replace('#', '');
+            const element = document.getElementById(id);
+            if (element) observer.observe(element);
+        });
+
+        // Special case: if we are at the very bottom of the page, activate the last item
+        const handleBottomCheck = () => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                const lastItem = navItems[navItems.length - 1];
+                if (lastItem) setActiveSection(lastItem.href.replace('#', ''));
+            }
+        };
+        window.addEventListener('scroll', handleBottomCheck);
+
 
         return () => {
-            window.removeEventListener('scroll', handleScrollSpy);
-            window.removeEventListener('resize', handleScrollSpy);
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', handleBottomCheck);
+            observer.disconnect();
         };
     }, []);
 

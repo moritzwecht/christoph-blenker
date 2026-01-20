@@ -21,7 +21,7 @@ export default defineType({
             title: 'Beschreibung',
             type: 'text',
             rows: 2,
-            validation: (rule) => rule.required(),
+            // validation: (rule) => rule.required(),
         }),
         defineField({
             name: 'cover',

@@ -136,6 +136,7 @@ function NewsCard({ item }: { item: NewsItem }) {
                     {item.link && (
                         <Link
                             href={item.link}
+                            target='_blank'
                             className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 border-b border-gray-900 hover:text-blue-600 hover:border-blue-600 transition-colors"
                         >
                             {item.linkText || 'Read More'}

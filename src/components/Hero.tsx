@@ -29,11 +29,11 @@ interface HeroProps {
 
 export default function Hero({ news, events }: HeroProps) {
     return (
-        <section id="home" className="section-padding relative min-h-screen flex flex-col justify-center">
+        <section className="section-padding relative min-h-screen flex flex-col justify-center">
             <SectionDivider position="bottom" />
             <div className="px-4 md:px-8 max-w-[1200px] mx-auto w-full relative z-10">
                 {/* Header */}
-                <div className="mb-15">
+                <div id="home" className="mb-15">
                     <div>
                         <Heading level="h1" className="text-6xl md:text-6xl text-white">
                             Christoph Blenker
@@ -50,9 +50,8 @@ export default function Hero({ news, events }: HeroProps) {
 
                 {/* Events Section */}
                 {events.length > 0 && (
-                    <div className="mt-32 mx-auto">
+                    <div id="dates" className="mt-32 mx-auto scroll-mt-32">
                         <div className="mb-16">
-                            <div id="dates" className="scroll-mt-32 invisible h-0" />
                             <Heading level="h2" className="text-left text-white">
                                 Termine
                             </Heading>

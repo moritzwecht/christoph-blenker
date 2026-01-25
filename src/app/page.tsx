@@ -5,7 +5,6 @@ import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Samples from "@/components/Samples";
 import Gallery from "@/components/Gallery";
-import Contact from "@/components/Contact";
 import Discography from "@/components/Discography";
 import Teaching from "@/components/Teaching";
 import Footer from "@/components/Footer";

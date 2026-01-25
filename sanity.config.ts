@@ -27,23 +27,30 @@ export default defineConfig({
             structure: (S: StructureBuilder, context: any) => {
                 return S.list()
                     .title('Inhalt')
-                    .items([
-                        orderableDocumentListDeskItem({ type: 'news', title: 'Neuigkeiten', S, context }),
-                        orderableDocumentListDeskItem({ type: 'event', title: 'Termine', S, context }),
-                        orderableDocumentListDeskItem({ type: 'discography', title: 'Diskographie', S, context }),
-                        S.divider(),
-                        S.listItem()
-                            .title('Unterricht')
-                            .child(
-                                S.editor()
-                                    .schemaType('teaching')
-                                    .documentId('teaching')
-                            ),
-                        S.divider(),
-                        // Automatically add any other document types
-                        ...S.documentTypeListItems().filter(
-                            (listItem: any) => !['news', 'event', 'discography', 'teaching'].includes(listItem.getId() as string)
+                    .items([S.listItem()
+                        .title('Seiteneinstellungen')
+                        .child(
+                            S.editor()
+                                .schemaType('siteSettings')
+                                .documentId('siteSettings')
                         ),
+                    S.divider(),
+                    orderableDocumentListDeskItem({ type: 'news', title: 'Neuigkeiten', S, context }),
+                    orderableDocumentListDeskItem({ type: 'event', title: 'Termine', S, context }),
+                    orderableDocumentListDeskItem({ type: 'discography', title: 'Diskographie', S, context }),
+                    S.divider(),
+                    S.listItem()
+                        .title('Unterricht')
+                        .child(
+                            S.editor()
+                                .schemaType('teaching')
+                                .documentId('teaching')
+                        ),
+                    S.divider(),
+                    // Automatically add any other document types
+                    ...S.documentTypeListItems().filter(
+                        (listItem: any) => !['news', 'event', 'discography', 'teaching', 'siteSettings'].includes(listItem.getId() as string)
+                    ),
                     ])
             },
         }),

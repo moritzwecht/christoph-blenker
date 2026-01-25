@@ -6,7 +6,8 @@ import project from './project'
 import gallery from './gallery'
 import discography from './discography'
 import teaching from './teaching'
+import siteSettings from './siteSettings'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-    types: [news, event, about, project, gallery, discography, teaching],
+    types: [news, event, about, project, gallery, discography, teaching, siteSettings],
 }

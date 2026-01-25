@@ -15,10 +15,36 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Christoph Blenker",
-  description: "Musiker",
-};
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await client.fetch(`*[_type == "siteSettings"][0]`);
+
+  if (!settings) {
+    return {
+      title: "Christoph Blenker",
+      description: "Musiker",
+    };
+  }
+
+  return {
+    title: settings.title,
+    description: settings.description,
+    keywords: settings.keywords,
+    openGraph: {
+      title: settings.title,
+      description: settings.description,
+      images: settings.ogImage ? [{ url: urlFor(settings.ogImage).width(1200).height(630).url() }] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: settings.title,
+      description: settings.description,
+      images: settings.ogImage ? [urlFor(settings.ogImage).width(1200).height(630).url()] : [],
+    },
+  };
+}
 
 export default function RootLayout({
   children,

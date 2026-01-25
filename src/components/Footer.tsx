@@ -12,7 +12,7 @@ export default function Footer() {
     const [isDatenschutzOpen, setIsDatenschutzOpen] = useState(false);
 
     return (
-        <footer className="bg-black pt-24 pb-8 border-t border-zinc-900 text-sm">
+        <footer id="contact" className="bg-black pt-24 pb-8 border-t border-zinc-900 text-sm">
             <Container>
                 <div className="grid md:grid-cols-2 gap-8 text-zinc-400 text-base leading-relaxed">
                     {/* Column 1: Address */}
